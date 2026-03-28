@@ -54,7 +54,7 @@
 - Đến chiều hôm đó, mình nán lại giảng đường, và định bụng đợi đến tầm 1h mới đi ăn trưa, đó cũng chính là lúc mình bắt đầu mở máy và ngồi nghiền ngẫm blog kia. Do nó cuốn quá nên mình lỡ ngồi liền mạch luôn đến gần 5r mới về, may trong cặp vẫn còn bánh ăn lót dạ:))
 - Trong buổi chiều đó, mình đã đạt được khá nhiều thứ:
     - Đầu tiên, trên lab tự lab tự setup của mình thì PrintSpoofer đã bị chặn bởi Windows Defender và ko thể tải xuống được (nó liên tục bị auto delete)
-    - Tuy nniên, sau đó mình thử encode bằng base64 thành text sau đó mới tải lên server rồi mới decode. Thực ra thì cách này cũng vẫn bị Windows server bắt được và ko thành công.
+    - Tuy nniên, sau đó mình thử encode bằng base64 thành text sau đó mới tải lên server rồi mới decode. Thực ra thì cách này cũng vẫn bị Windows Defender bắt được và ko thành công.
     - Sau đó, mình còn thử 1 số cách để bypass như là sửa các tên gọi hàm cùng với các code trong đó, thêm thông tin dư thừa, làm rối nhưng với lab tự setup thì vẫn bị Windows Defender bắt được 🤨.
     - Mặc dù mình nhận ra lúc thử tắt Windows defender thì ko bị sao cả và bypass qua bình thường, nhưng do ko rõ điều kiện của web server kia thế nào nên mình hơi rối chút.
     - Sau vài tiếng thử, đồng hồ đã chỉ hơn 4h chiều, lúc này mình bắt đầu thấy nản và bắt đầu hơi liều một chút, thử download thẳng lên server luôn. Và kết quả nhận lại bất ngờ vcl:))), nó thành công thật luôn ạ.
@@ -71,7 +71,7 @@
 ### Phase 5: Explore
 - Dù tối hôm qua ngủ trễ nhưng sáng nay mình vẫn dậy khá sớm, lúc này tinh thần đã lên cao và sẵn sàng chiến tiếp.
 - Lúc này đầu óc đã tỉnh táo và thông suốt hơn 1 chút, mình bắt đầu thử lần mò vào Recycle bin, quả nhiên trong đó có 1 số sensitive data.
-- Mình lần mò vào trong đó và restore lại cả folder, ngoại trừ 1 số file đặc biệt như desktpo.ini hay gì đó (mình cũng ko rõ chức năng mấy cái này lắm nhưng nó bị lỗi khi cố restore lại).
+- Mình lần mò vào trong đó và restore lại cả folder, ngoại trừ 1 số file đặc biệt như desktop.ini hay gì đó (mình cũng ko rõ chức năng mấy cái này lắm nhưng nó bị lỗi khi cố restore lại).
 - Sau đó mình check thấy 1 số file .asp trong đó, cùng 1 số thứ linh tinh như logs, hay gì đó đi kèm.
 - Check một hồi lâu, đến tận tầm chiều, mình đã nghĩ đến việc tải nó về máy local cho dễ xem, cũng như backup trong trường hợp web fix vuln. Mình thử zip lại, cố gửi qua server của máy khác bằng cách tạo 1 http.server tạm trên Kali Linux, nhưng sau đó là sự thất vọng khi dù cố kiểu gì cũng bị Nginx chặn đứng lại, ko cho phép gửi đi.
 - Sau đó, gemini đã cho mình 1 idea khá hay đó là việc encode thành base64 rồi sau đó copy về local mới decode lại. Nhưng idea này lại gặp 1 vấn đề khác nghiêm trọng là, đoạn text của base64 quá dài và ko thể hiển thị ra màn hình của web trong 1 lần bằng `type`.
@@ -93,7 +93,7 @@
 
 ## Phase 6: Exploit
 - Do mệt mỏi từ các hôm trước tích tụ nên mình đã ngủ hết buổi sáng, một phần cũng do mình nghĩ đã nắm trong tay đủ thứ cần thiết rồi nên hơi thả lỏng.
-- Đến đầu giờ chiều cũng là lúc mình mở source code ra để xem, và thứ làm mình chú ý đến là trong file .config có chứa credential cũng như password để truy cập database.
+- Đến đầu giờ chiều cũng là lúc mình mở source code ra để xem, và thứ làm mình chú ý đến là trong file config.asp có chứa credential cũng như password để truy cập database.
 - Lúc đó mới thật sự là vớ được kho báu, mình bắt đầu nhờ gemini generate ra một đoạn webshell viết bằng .asp để injection vào web thông qua upload avatar.
 - Đó cũng chính là lúc mình bắt đầu tìm cách tải toàn bộ database xuống và nắm trong tay quyền sinh sát thật sự.
 - Nhưng có 1 vấn đề mới xuất hiện, đó là password của user ko được lưu dưới dạng text mà được băm qua hàm MD5. Lúc này mình vẫn chưa biết gì về cách reverse hash MD5, thứ duy nhất mình biết về nó là hay dùng để lưu password giống bcrypt, argon2 nhưng được đánh giá là yếu hơn.
