@@ -1,10 +1,18 @@
-# The Journey of explore and exploit RCE in window web server
+# My First Journey to a Real-World RCE: From a Simple Bug to Full System Compromise
 
 > ### Note 1: Xin phép ko public tên web =)))
 
 > ### Note 2: Chắc lúc bài viết này được public thì web cũng fix vuln rồi:))), thật sự thì mình cũng ko đủ can đảm để đăng lúc chưa fix đâu.
 
-> ### Note 3: Lần đầu test Window Web Server, khá bỡ ngỡ, ko quen cmd của win nên thuần prompt:))
+> ### Note 3: Lần đầu test Windows Web Server, khá bỡ ngỡ, ko quen cmd của win nên thuần prompt:))
+
+## Table of Contents
+1. [Day 1: Reconnaissance & Scanning](#day-1)
+2. [Day 2: Gaining Access & Local Privilege Escalation (LPE)](#day-2)
+3. [Day 3: Exploring](#day-3)
+4. [Day 4: The Final Exploit & Cracking](#day-4)
+5. [Key Takeaways](#bài-học-rút-ra)
+
 
 ## Day 1:
 
@@ -18,39 +26,40 @@
 ### Phase 2: Scanning and Enumeration
 - Ban đầu thì mình chuyên tâm vào gif hơn vì nghĩ có nhiều khả năng injection hơn, nhưng điểm qua vài trick lỏd mà vẫn không được nên mình quyết định gác lại chuyển 1 số CVE, CWE-34 hay những CVE liên quan đến nó, thậm chí là dò hỏi Gemini liên tục.
 - Thấm thoát đã sang đến 2 rưỡi sáng, dù đã thử qua vài tool và vài trick lỏd nhưng vẫn ko cái nào thực sự có hiệu quả lên web. Thật sự lúc đấy mình cũng nản lắm rồi, tính lên giường đi ngủ luôn để sáng dậy đi học cơ, nhưng nhờ thế lực thần bí nào đó mà mình vẫn ngồi test tiếp =)))
-- Đến tầm đâu đó tầm hơn 3h sáng, mình có tìm được 1 blog nói về việc FE check file extension nhưng BE không, thế là mình bắt tay vào thử. Test xong, mình rất muốn hét lên "Euréka"😂, nhưng nhìn lại phòng thấy các cháu ngủ ngon qua nên thôi 😚. Thật sự thì mình ko ngờ tới cái này, web thì mấy chục ngàn người dùng mà lại hớ hênh đến độ này. 🤨
+- Đến tầm đâu đó tầm hơn 3h sáng, mình có tìm được 1 blog nói về Client-side Validation Bypass, thế là mình bắt tay vào thử. Test xong, mình rất muốn hét lên "Euréka"😂, nhưng nhìn lại phòng thấy các cháu ngủ ngon qua nên thôi 😚.
+- Thật sự thì mình ko ngờ tới nước đi này, web thì mấy chục ngàn người dùng mà lại hớ hênh đến độ này. 🤨
 - Lúc đó mình cũng khá mệt nên cũng ko nghĩ ngợi gì nữa mà đi ngủ luôn.
 
 
 ### Phase 3: Reconnaissance server (After explore RCE vulnerability)
 - Lúc này, mình đã lên lớp ngồi học, nhưng cố tình xuống bàn cuối ngồi một mình để tiện test web.
 - Sau khi có được RCE trong tay, mình thử thu thập những thông tin cơ bản của server, đầu tiên thì những phát hiện của mình là:
-    - Đây là 1 con window web server 2016, OS version là win10x64.
-    - Role hiện tại khi mình RCE mặc định là `iis apppool`, permission thấp nhất.
+    - Đây là 1 con Windows web server 2016, OS version là win10x64.
+    - Role hiện tại khi mình RCE mặc định là Low-privileged Service Account.
     - Check `tasklist` xong hỏi gemini thì nó cho mình biết 1 số process đang dùng để chạy web.
     - Có sử dụng cả WAN và LAN
-- Đây là lần đầu mình RCE qua shell của window server nên khá bỡ ngỡ.
+- Đây là lần đầu mình RCE qua shell của Windows server nên khá bỡ ngỡ.
 - Trước giờ mình toàn host web server Linux nên thực sự mình không quen lắm và phải hỏi gemini khá nhiều thứ, từ những lệnh cơ bản như `type` để in data ra. Mình cũng nhờ gemini generate code .asp có chút giao diện để dễ thao tác với RCE hơn thay vì chỉ chỉnh trên url.
 - Sau đó mình dạo một vòng quanh server, quan sát vị trí hiện tại bằng `cd` (cuz of this make i misleading 🥲). Sau đó đi qua các thư mục trong ổ C, check cả ngày thay đổi cũng như các tệp được sửa gần đây, sau đó mình đi đến folder `C:\Users`, ở đây thì mình bị chặn lại, không vào được folder `Administrator` do permission quá thấp, do đó ko đủ khả năng check trong đó có gì, lúc đó dù đã nhờ gemini thử mọi cách vẫn ko cách nào qua được.
-- Đến chiều hôm đó, vì cay cú quá nên mình đã tìm đến 1 thứ tà đạo, đó là privilege escalation, hay nói dễ hiểu là leo thang đặc quyền, đây là blog của nó [PrintSpoofer](https://itm4n.github.io/printspoofer-abusing-impersonate-privileges/).
+- Đến chiều hôm đó, vì cay cú quá nên mình đã tìm đến 1 thứ tà đạo, đó là `Local Privilege Escalation (LPE)`, hay nói dễ hiểu là leo thang đặc quyền, đây là blog của nó [PrintSpoofer](https://itm4n.github.io/printspoofer-abusing-impersonate-privileges/).
 - Tối hôm đó, do 1 chút cố chấp ko muốn dùng privilege do ko quen (lúc đó mình cứ nghĩ là nó khó dùng cơ), mình thuần nhờ gemini giúp để thu thập thông tin, nhưng kết quả ko đạt được gì cả.
-- Sau hơn 1 tiếng lãng phí thì mình bắt đầu nghĩ tới việc tự tạo 1 lab window server có RCE để test.
+- Sau hơn 1 tiếng lãng phí thì mình bắt đầu nghĩ tới việc tự tạo 1 lab Windows server có RCE để test. Và vì nó tốn chi phí để duy trì nên mình đã nghĩ cần phải nhanh chóng tranh thủ cơ hội thực hành có 102 này để gain experience.
 
 > ### Note: Thực ra cũng trong tối hôm này, mình đã báo cáo lại với bên đó về vuln, gửi clip báo cáo cách mà web bị RCE, đồng thời cũng đã nhận phản hồi lại. Nhưng do sự chậm trễ trong việc fix nên thành ra mình mới có ngày thứ 2,3,... để ngồi exploit tiếp =)))
 
 ## Day 2:
 
 ### Phase 4: Gaining access
-- Sáng do bận học môn Nhật, ko được mở máy nên mình chưa làm được gì cả.
+- Sáng do bận học, môn này ko được mở máy nên mình chưa làm được gì cả.
 - Đến chiều hôm đó, mình nán lại giảng đường, và định bụng đợi đến tầm 1h mới đi ăn trưa, đó cũng chính là lúc mình bắt đầu mở máy và ngồi nghiền ngẫm blog kia. Do nó cuốn quá nên mình lỡ ngồi liền mạch luôn đến gần 5r mới về, may trong cặp vẫn còn bánh ăn lót dạ:))
 - Trong buổi chiều đó, mình đã đạt được khá nhiều thứ:
-    - Đầu tiên, trên lab tự lab tự setup của mình thì PrintSpoofer đã bị chặn bởi Window Defender và ko thể tải xuống được (nó liên tục bị auto delete)
-    - Tuy nniên, sau đó mình thử encode bằng base64 thành text sau đó mới tải lên server rồi mới decode. Thực ra thì cách này cũng vẫn bị window server bắt được và ko thành công.
-    - Sau đó, mình còn thử 1 số cách để bypass như là sửa các tên gọi hàm cùng với các code trong đó, thêm thông tin dư thừa, làm rối nhưng với lab tự setup thì vẫn bị Window Defender bắt được 🤨.
-    - Mặc dù mình nhận ra lúc thử tắt window defender thì ko bị sao cả và bypass qua bình thường, nhưng do ko rõ điều kiện của web server kia thế nào nên mình hơi rối chút.
+    - Đầu tiên, trên lab tự lab tự setup của mình thì PrintSpoofer đã bị chặn bởi Windows Defender và ko thể tải xuống được (nó liên tục bị auto delete)
+    - Tuy nniên, sau đó mình thử encode bằng base64 thành text sau đó mới tải lên server rồi mới decode. Thực ra thì cách này cũng vẫn bị Windows server bắt được và ko thành công.
+    - Sau đó, mình còn thử 1 số cách để bypass như là sửa các tên gọi hàm cùng với các code trong đó, thêm thông tin dư thừa, làm rối nhưng với lab tự setup thì vẫn bị Windows Defender bắt được 🤨.
+    - Mặc dù mình nhận ra lúc thử tắt Windows defender thì ko bị sao cả và bypass qua bình thường, nhưng do ko rõ điều kiện của web server kia thế nào nên mình hơi rối chút.
     - Sau vài tiếng thử, đồng hồ đã chỉ hơn 4h chiều, lúc này mình bắt đầu thấy nản và bắt đầu hơi liều một chút, thử download thẳng lên server luôn. Và kết quả nhận lại bất ngờ vcl:))), nó thành công thật luôn ạ.
-    - Nhờ đó mình đi đến 1 kết luận là khả năng server đã tắt Window Defender do trong quá trình code, 1 số file .asp đã bị xóa do sự nhầm lẫn là malicious code. Chắc admin phải cay lắm nên mới tắt đi hoặc vì lý do nào đó:))
-- Với thu hoạch trong tay, mình khá vui khi đã lần đầu tiên thành công trong việc leo thang đặc quyền trên window.
+    - Nhờ đó mình đi đến 1 kết luận là khả năng server đã tắt Windows Defender do trong quá trình code, 1 số file .asp đã bị xóa do sự nhầm lẫn là malicious code. Chắc admin phải cay lắm nên mới tắt đi hoặc vì lý do nào đó:))
+- Với thu hoạch trong tay, mình khá vui khi đã lần đầu tiên thành công trong việc leo thang đặc quyền trên Windows.
 
 - Nắm quyền sinh sát trong tay🤡, mình tự tin dạo 1 vòng quanh server tiếp, và lần này thì ko bị hạn chế bởi gì nữa.
 - Mình bắt đầu check thử toàn bộ ổ C, quét thử xem có file .config hay file gì sensitive ko. Nhưng lúc đó mình thấy cả những folder của user administrator và các user khác cũng đều ko chứa 1 file nào liên quan đến code cả.
@@ -85,19 +94,32 @@
 ## Phase 6: Exploit
 - Do mệt mỏi từ các hôm trước tích tụ nên mình đã ngủ hết buổi sáng, một phần cũng do mình nghĩ đã nắm trong tay đủ thứ cần thiết rồi nên hơi thả lỏng.
 - Đến đầu giờ chiều cũng là lúc mình mở source code ra để xem, và thứ làm mình chú ý đến là trong file .config có chứa credential cũng như password để truy cập database.
-- Lúc đó mới thật sự là vớ được kho báu, mình bắt đầu nhờ gemini generate ra một đoạn code .asp để injection vào web thông qua upload avatar.
+- Lúc đó mới thật sự là vớ được kho báu, mình bắt đầu nhờ gemini generate ra một đoạn webshell viết bằng .asp để injection vào web thông qua upload avatar.
 - Đó cũng chính là lúc mình bắt đầu tìm cách tải toàn bộ database xuống và nắm trong tay quyền sinh sát thật sự.
 - Nhưng có 1 vấn đề mới xuất hiện, đó là password của user ko được lưu dưới dạng text mà được băm qua hàm MD5. Lúc này mình vẫn chưa biết gì về cách reverse hash MD5, thứ duy nhất mình biết về nó là hay dùng để lưu password giống bcrypt, argon2 nhưng được đánh giá là yếu hơn.
 - Lúc này mình thử research về đủ thứ liên quan về nó, như các cách bruteforce, rainbow table hay hash collision attack. Nhưng đa phần tool mình tìm được ko có custom MD5 mà thuần bruteforce hay pre compute nên vẫn ko đủ tốt để sử dụng.
-- Và lúc này mình thử hỏi gemini xem có tool nào trên kali linux hữu ích ko, và cuối cùng cũng tìm ra được chân ái, đó chính là john the ripper. Đây là lần đầu tiên mình sử dụng nó, và thấy nó khá hữu dụng khi hỗ trợ cả custom cho các cách hash khác nhau. Do nắm trong tay source code nên mình còn sở hữu cả salt và cách nó hash MD5. Nhờ đó quá trình diễn ra khá nhanh.
+- Và lúc này mình thử hỏi gemini xem có tool nào trên kali linux hữu ích ko, và cuối cùng cũng tìm ra được chân ái, đó chính là John the Ripper. Đây là lần đầu tiên mình sử dụng nó, và thấy nó khá hữu dụng khi hỗ trợ cả custom cho các cách hash khác nhau. Do nắm trong tay source code nên mình còn sở hữu cả Salt và cách nó hash MD5. Nhờ đó quá trình diễn ra khá nhanh.
 - Và kết quả là chỉ sau 1 đêm treo máy, 10 tiếng, ko GPU, mình đã crack được hơn nửa số pass.
 
 ### 🫡Đến đây thì kết quả đã thật sự ngã ngũ.
 ## Bài học rút ra:
 - Hãy kiểm thử cẩn thận vì đôi khi lỗi lớn nhất ở đây lại là human chứ ko phải ở hệ thống.
 - Nguyên tắc "Zero trust user input" phải luôn được áp dụng triệt để, không được lơ là.
-- Hãy bật Window Defender để nó detect các file malicious qua signature hoặc cứ tắt đi cũng đc.
-- Hãy bật Window Defender để nó detect các file malicious qua signature hoặc cứ tắt đi cũng đc.
-- Hãy bật Window Defender để nó detect các file malicious qua signature hoặc cứ tắt đi cũng đc.
+- Nên thêm các quy tắc đặt password phức tạp, người dùng thường để dạng ngắn cho dễ nhớ nên việc hash MD5 ko có quá nhiều tác dụng.
+- Sử dụng các phương pháp hiện đại để băm password thay vì MD5 đã lỗi thời.
+- Hãy bật Windows Defender để nó detect các file malicious qua signature hoặc cứ tắt đi cũng đc.
+- Hãy bật Windows Defender để nó detect các file malicious qua signature hoặc cứ tắt đi cũng đc.
+- Hãy bật Windows Defender để nó detect các file malicious qua signature hoặc cứ tắt đi cũng đc.
 
-> ### Cái quan trọng hoặc ko quan trọng nhắc lại 3 lần cho nhớ:)  
+> ### Cái quan trọng hoặc ko quan trọng nhắc lại 3 lần cho nhớ:)
+
+
+## Final Thoughts: The Lesson Beyond the Shell
+
+> Looking back at this 4-day journey, the most important thing I learned wasn't just how to bypass a filter or how to use a specific exploit like PrintSpoofer. It was about persistence.
+
+> In the world of cybersecurity, the "Eureka" moment rarely happens at the start. It happens at 3:00 AM, after dozens of failed attempts, when you’re about to give up but decide to try just one more payload. From a simple avatar upload to gaining full control over a Windows Server, this experience taught me that security is a cat-and-mouse game where the smallest human error—like leaving a front-end script exposed or forgetting to re-enable a defender—can lead to a total compromise.
+
+> As I close this log, the shell is gone and the vulnerability is (hopefully) patched, but the mindset remains: Never trust user input, and never stop exploring.
+
+🤡 These English is what I really thought but I got this also from Gemini. Best support.
