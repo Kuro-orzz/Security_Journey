@@ -13,3 +13,7 @@ default-theme = "navy"
 preferred-dark-theme = "navy"
 git-repository-url = "https://github.com/Kuro-orzz/Security_Journey"
 edit-url-template = "https://github.com/Kuro-orzz/Security_Journey/edit/master/{path}"
+
+[preprocessor.admonish]
+command = "mdbook-admonish"
+assets_version = "3.0.2"

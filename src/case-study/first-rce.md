@@ -1,12 +1,12 @@
 # My First Journey to a Real-World RCE: From a Simple Bug to Full System Compromise
 
-**Note 1:** Xin phép ko public tên web =)))
+~~~admonish note title="Trước khi đọc"
+1. Xin phép ko public tên web =)))
+2. Chắc lúc bài viết này được public thì web cũng fix vuln rồi:))), thật sự thì mình cũng ko đủ can đảm để đăng lúc chưa fix đâu.
+3. Lần đầu test Windows Web Server, khá bỡ ngỡ, ko quen cmd của win nên thuần prompt:))
+~~~
 
-**Note 2:** Chắc lúc bài viết này được public thì web cũng fix vuln rồi:))), thật sự thì mình cũng ko đủ can đảm để đăng lúc chưa fix đâu.
-
-**Note 3:** Lần đầu test Windows Web Server, khá bỡ ngỡ, ko quen cmd của win nên thuần prompt:))
-
-## Day 1:
+## Day 1
 
 ### Phase 1: Reconnaissance web UI
 - Đó là vào một buổi sáng sớm, cụ thể là 1h sáng 😗, có 1 con người vẫn đang cố chấp dùng Burp Suite để pentest web. Đó là chấp niệm muốn có "lần đầu làm chuyện ấy" với cái web ấy =)))) 
@@ -38,10 +38,12 @@
 - Tới tối hôm đó, do một chút cố chấp ko muốn dùng privilege do ko quen (lúc đó mình cứ nghĩ là nó khó dùng cơ), mình thuần nhờ gemini giúp để thu thập thông tin, nhưng kết quả ko đạt được gì cả.
 - Sau hơn 1 tiếng lãng phí thì mình bắt đầu nghĩ tới việc tự tạo 1 lab Windows server có RCE để test. Và vì nó tốn chi phí để duy trì nên mình đã nghĩ cần phải nhanh chóng pentest được web ngay trong tuần này, tránh kéo dài vì sẽ mất thêm money.
 
-**Note:** Thực ra cũng trong tối hôm này, mình đã báo cáo lại với bên đó về vuln, gửi clip báo cáo cách mà web bị RCE, đồng thời cũng đã nhận phản hồi lại. Nhưng do sự chậm trễ trong việc fix nên thành ra mình mới có ngày thứ 2,3,... để ngồi exploit tiếp =)))
+~~~admonish info title="Note"
+Thực ra cũng trong tối hôm này, mình đã báo cáo lại với bên đó về vuln, gửi clip báo cáo cách mà web bị RCE, đồng thời cũng đã nhận phản hồi lại. Nhưng do sự chậm trễ trong việc fix nên thành ra mình mới có ngày thứ 2,3,... để ngồi exploit tiếp =)))
+~~~
 
 
-## Day 2:
+## Day 2
 
 ### Phase 4: Gaining access
 - Sáng do bận học, môn này ko được mở máy nên mình chưa làm được gì cả.
@@ -54,13 +56,12 @@
     - Sau vài tiếng thử, đồng hồ đã chỉ hơn 4h chiều, lúc này mình bắt đầu thấy nản và bắt đầu hơi liều một chút, thử download thẳng lên server luôn. Và kết quả nhận lại bất ngờ vcl:))), nó thành công thật luôn ạ.
     - Nhờ đó mình đi đến 1 kết luận là khả năng server đã tắt Windows Defender, có thể là do trong quá trình code, 1 số file .asp đã bị xóa do sự nhầm lẫn là malicious code (lúc mình thử tải về máy thì cũng có vài file bị detect nhầm và bị delete mất). Chắc admin phải cay lắm nên mới tắt đi hoặc vì lý do nào đó không rõ:))
 - Với thu hoạch có trong tay, mình khá vui khi đã lần đầu tiên thành công trong việc leo thang đặc quyền trên Windows.
-
 - Nắm quyền sinh sát trong tay🤡, mình tự tin dạo 1 vòng quanh server tiếp, và lần này thì ko bị hạn chế bởi gì nữa.
 - Mình bắt đầu check thử toàn bộ ổ C, quét thử xem có file .config hay file gì sensitive ko. Nhưng lúc đó mình thấy cả những folder của user administrator và các user khác cũng đều ko chứa 1 file nào liên quan đến code cả.
 - Đến lúc này, mình hỏi gemini thường xuyên hơn, nhưng do 1 số thứ misleading trong response của gemini đã khiến mình lầm tưởng rằng server ko có code, và code có thể được sử dụng thông qua 1 vị trí khác ngoài ổ cứng (đây là do tôi ko quen thôi;)), lúc đó kể cả database cũng ko thể thao tác được do ko có được credential hay password để xác thực.
 - Thực sự thì tối hôm đó hơi ác mộng 1 chút, nắm full quyền trong tay nhưng lại ko thể tìm thấy thứ thực sự có giá trị làm tôi ngồi prompt cả tối hôm đó mà lại tiếp tục thu được rất ít thông tin.
 
-## Day 3:
+## Day 3
 
 ### Phase 5: Explore
 - Dù tối hôm qua ngủ trễ nhưng sáng nay mình vẫn dậy khá sớm, lúc này tinh thần đã lên cao và sẵn sàng chiến tiếp.
@@ -77,18 +78,22 @@
 - Toàn bộ source hay các sensitive data đều nằm trong này. Và cả tối mình chỉ ngồi đọc và xem qua việc hiển thị code của từng file qua shell.
 - Thực sự thì mình cũng muốn tải về lắm, nhưng khi xem dung lượng của các folder chứa code và các data khác, nó có thể lên đến vài trăm MB, mà bản thân mình lại ko muốn download thủ công từng file lẻ, tốn sức mà ko hiệu quả.
 
-**Note:** Web đã được trang bị nginx cẩn thận giúp tránh được Directory Traversal
+~~~admonish info title="Note"
+Web đã được trang bị nginx cẩn thận giúp tránh được Directory Traversal
+~~~
 
 - Sau 1 hồi lần mò các file, mình thấy 1 folder dẫn tới nơi upload avatar của user, chợt mình nảy ra 1 ý tưởng khá táo bạo, đó là nếu user có thể truy cập đc file trong folder này, thì tại sao ta ko lợi dụng chính nó để download file về.
 - Nhờ có idea mới, mình bắt tay vào làm, thử zip lại xong sau đó ném vào folder chứa upload avatar.
 - Và kết quả sau đó nó thực sự thành công đúng như mong đợi, tiếp tục bám vào injection đó, mình lại tải tiếp các folder khác về máy.
 
-**Note:** Thực sự thì mình đã nghĩ rằng đã nắm trong tay tất cả rồi và sẽ ko có Day 4 luôn, nhưng có trong tay source code mà ko có được database thì cũng chưa gọi là thành công lắm =)))
+~~~admonish info title="Note"
+Thực sự thì mình đã nghĩ rằng đã nắm trong tay tất cả rồi và sẽ ko có Day 4 luôn, nhưng có trong tay source code mà ko có được database thì cũng chưa gọi là thành công lắm =)))
+~~~
 
 
-## Day 4:
+## Day 4
 
-### Phase 6: Exploit
+#### Phase 6: Exploit
 - Do mệt mỏi từ các hôm trước tích tụ nên mình đã ngủ hết buổi sáng, một phần cũng do mình nghĩ đã nắm trong tay đủ thứ cần thiết rồi nên hơi thả lỏng.
 - Đến đầu giờ chiều cũng là lúc mình mở source code ra để xem, và thứ làm mình chú ý đến là trong file config.asp có chứa credential cũng như password để truy cập database.
 - Đó mới thật sự là vớ được kho báu, mình bắt đầu nhờ gemini generate ra một đoạn webshell viết bằng .asp để injection vào web thông qua upload avatar.
@@ -104,26 +109,30 @@
     - Do mấy tool kiếm được trên github đa phần toàn reverse hash theo kiểu ko biết trước salt hoặc chỉ dành cho MD5 bình thường, nên mình cũng lười ngồi đọc với sửa lại 😗.
 - Và kết quả là chỉ sau 1 đêm treo máy, 10 tiếng, ko GPU, mình đã crack được hơn nửa số pass.
 
-### 🫡Đến đây thì kết quả đã thật sự ngã ngũ.
+**🫡 Đến đây thì kết quả đã thật sự ngã ngũ.**
 
-## Bài học rút ra:
+## Bài học rút ra
 - Hãy kiểm thử cẩn thận vì đôi khi lỗi lớn nhất ở đây lại là human chứ ko phải ở hệ thống.
 - Nguyên tắc "Zero trust user input" phải luôn được áp dụng triệt để, không được lơ là.
 - Nên thêm các quy tắc đặt password phức tạp, người dùng thường để dạng ngắn cho dễ nhớ nên việc hash MD5 ko có quá nhiều tác dụng.
 - Sử dụng các phương pháp hiện đại để băm password thay vì MD5 đã lỗi thời.
-- Hãy bật Windows Defender để nó detect các file malicious qua signature hoặc cứ tắt đi cũng đc.
-- Hãy bật Windows Defender để nó detect các file malicious qua signature hoặc cứ tắt đi cũng đc.
-- Hãy bật Windows Defender để nó detect các file malicious qua signature hoặc cứ tắt đi cũng đc.
+~~~admonish warning title="Nhắc lại 3 lần cho nhớ :)"
+Hãy bật Windows Defender để nó detect các file malicious qua signature hoặc cứ tắt đi cũng đc.
 
-**Cái quan trọng hoặc ko quan trọng nhắc lại 3 lần cho nhớ:)**
+Hãy bật Windows Defender để nó detect các file malicious qua signature hoặc cứ tắt đi cũng đc.
+
+Hãy bật Windows Defender để nó detect các file malicious qua signature hoặc cứ tắt đi cũng đc.
+~~~
 
 
 ## Final Thoughts: The Lesson Beyond the Shell
 
-> Looking back at this 4-day journey, the most important thing I learned wasn't just how to bypass a filter or how to use a specific exploit like PrintSpoofer. It was about persistence.
+~~~admonish quote title=""
+Looking back at this 4-day journey, the most important thing I learned wasn't just how to bypass a filter or how to use a specific exploit like PrintSpoofer. It was about persistence.
 
-> In the world of cybersecurity, the "Eureka" moment rarely happens at the start. It happens at 3:00 AM, after dozens of failed attempts, when you're about to give up but decide to try just one more payload. From a simple avatar upload to gaining full control over a Windows Server, this experience taught me that security is a cat-and-mouse game where the smallest human error—like leaving a front-end script exposed or forgetting to re-enable a defender—can lead to a total compromise.
+In the world of cybersecurity, the "Eureka" moment rarely happens at the start. It happens at 3:00 AM, after dozens of failed attempts, when you're about to give up but decide to try just one more payload. From a simple avatar upload to gaining full control over a Windows Server, this experience taught me that security is a cat-and-mouse game where the smallest human error—like leaving a front-end script exposed or forgetting to re-enable a defender—can lead to a total compromise.
 
-> As I close this log, the shell is gone and the vulnerability is (hopefully) patched, but the mindset remains: Never trust user input, and never stop exploring.
+As I close this log, the shell is gone and the vulnerability is (hopefully) patched, but the mindset remains: Never trust user input, and never stop exploring.
+~~~
 
 🤡 These English part is what I really thought but I also got this from Gemini. Best support.
