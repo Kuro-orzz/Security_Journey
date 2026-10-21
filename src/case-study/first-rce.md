@@ -1,10 +1,10 @@
 # My First Journey to a Real-World RCE: From a Simple Bug to Full System Compromise
 
-> **Note 1:** Xin phép ko public tên web =)))
+**Note 1:** Xin phép ko public tên web =)))
 
-> **Note 2:** Chắc lúc bài viết này được public thì web cũng fix vuln rồi:))), thật sự thì mình cũng ko đủ can đảm để đăng lúc chưa fix đâu.
+**Note 2:** Chắc lúc bài viết này được public thì web cũng fix vuln rồi:))), thật sự thì mình cũng ko đủ can đảm để đăng lúc chưa fix đâu.
 
-> **Note 3:** Lần đầu test Windows Web Server, khá bỡ ngỡ, ko quen cmd của win nên thuần prompt:))
+**Note 3:** Lần đầu test Windows Web Server, khá bỡ ngỡ, ko quen cmd của win nên thuần prompt:))
 
 ## Day 1:
 
@@ -38,7 +38,7 @@
 - Tới tối hôm đó, do một chút cố chấp ko muốn dùng privilege do ko quen (lúc đó mình cứ nghĩ là nó khó dùng cơ), mình thuần nhờ gemini giúp để thu thập thông tin, nhưng kết quả ko đạt được gì cả.
 - Sau hơn 1 tiếng lãng phí thì mình bắt đầu nghĩ tới việc tự tạo 1 lab Windows server có RCE để test. Và vì nó tốn chi phí để duy trì nên mình đã nghĩ cần phải nhanh chóng pentest được web ngay trong tuần này, tránh kéo dài vì sẽ mất thêm money.
 
-> **Note:** Thực ra cũng trong tối hôm này, mình đã báo cáo lại với bên đó về vuln, gửi clip báo cáo cách mà web bị RCE, đồng thời cũng đã nhận phản hồi lại. Nhưng do sự chậm trễ trong việc fix nên thành ra mình mới có ngày thứ 2,3,... để ngồi exploit tiếp =)))
+**Note:** Thực ra cũng trong tối hôm này, mình đã báo cáo lại với bên đó về vuln, gửi clip báo cáo cách mà web bị RCE, đồng thời cũng đã nhận phản hồi lại. Nhưng do sự chậm trễ trong việc fix nên thành ra mình mới có ngày thứ 2,3,... để ngồi exploit tiếp =)))
 
 
 ## Day 2:
@@ -77,13 +77,13 @@
 - Toàn bộ source hay các sensitive data đều nằm trong này. Và cả tối mình chỉ ngồi đọc và xem qua việc hiển thị code của từng file qua shell.
 - Thực sự thì mình cũng muốn tải về lắm, nhưng khi xem dung lượng của các folder chứa code và các data khác, nó có thể lên đến vài trăm MB, mà bản thân mình lại ko muốn download thủ công từng file lẻ, tốn sức mà ko hiệu quả.
 
-> **Note:** Web đã được trang bị nginx cẩn thận giúp tránh được Directory Traversal
+**Note:** Web đã được trang bị nginx cẩn thận giúp tránh được Directory Traversal
 
 - Sau 1 hồi lần mò các file, mình thấy 1 folder dẫn tới nơi upload avatar của user, chợt mình nảy ra 1 ý tưởng khá táo bạo, đó là nếu user có thể truy cập đc file trong folder này, thì tại sao ta ko lợi dụng chính nó để download file về.
 - Nhờ có idea mới, mình bắt tay vào làm, thử zip lại xong sau đó ném vào folder chứa upload avatar.
 - Và kết quả sau đó nó thực sự thành công đúng như mong đợi, tiếp tục bám vào injection đó, mình lại tải tiếp các folder khác về máy.
 
-> **Note:** Thực sự thì mình đã nghĩ rằng đã nắm trong tay tất cả rồi và sẽ ko có Day 4 luôn, nhưng có trong tay source code mà ko có được database thì cũng chưa gọi là thành công lắm =)))
+**Note:** Thực sự thì mình đã nghĩ rằng đã nắm trong tay tất cả rồi và sẽ ko có Day 4 luôn, nhưng có trong tay source code mà ko có được database thì cũng chưa gọi là thành công lắm =)))
 
 
 ## Day 4:
@@ -115,7 +115,7 @@
 - Hãy bật Windows Defender để nó detect các file malicious qua signature hoặc cứ tắt đi cũng đc.
 - Hãy bật Windows Defender để nó detect các file malicious qua signature hoặc cứ tắt đi cũng đc.
 
-> **Cái quan trọng hoặc ko quan trọng nhắc lại 3 lần cho nhớ:)**
+**Cái quan trọng hoặc ko quan trọng nhắc lại 3 lần cho nhớ:)**
 
 
 ## Final Thoughts: The Lesson Beyond the Shell
