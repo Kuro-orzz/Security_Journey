@@ -1,15 +1,11 @@
 # About
 
-## Kuro-orzz
+Security Journey là nơi mình tổng hợp và chia sẻ kiến thức về bảo mật — từ những bài viết kỹ thuật, case study thực tế, đến các ghi chép trong quá trình học và nghiên cứu. Mục tiêu là xây dựng một nguồn tài liệu mở, dễ tra cứu, để bất kỳ ai cũng có thể học hỏi và đóng góp.
 
-Blog cá nhân ghi chép hành trình học và nghiên cứu bảo mật.
+Lấy cảm hứng từ [Cyberclopaedia](https://cr0mll.github.io/cyberclopaedia/) và [VNPT Sec](https://sec.vnpt.vn/blog).
 
-### Lĩnh vực quan tâm
+*Mọi nội dung trên blog chỉ phục vụ mục đích học tập và nghiên cứu. Các hoạt động pentest đều được thực hiện có sự đồng ý hoặc đã báo cáo đầy đủ.*
 
-- **Web Security** — khai thác và phòng thủ ứng dụng web
-- **Vulnerability Research** — phân tích CVE, review PoC, tìm hiểu root cause
-- **CTF** — thi đấu và luyện tập kỹ năng bảo mật
-
-### Liên hệ
+## Contact
 
 - GitHub: [Kuro-orzz](https://github.com/Kuro-orzz)
