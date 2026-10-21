@@ -113,6 +113,7 @@
 - Và kết quả là chỉ sau 1 đêm treo máy, 10 tiếng, ko GPU, mình đã crack được hơn nửa số pass.
 
 ### 🫡Đến đây thì kết quả đã thật sự ngã ngũ.
+
 ## Bài học rút ra:
 - Hãy kiểm thử cẩn thận vì đôi khi lỗi lớn nhất ở đây lại là human chứ ko phải ở hệ thống.
 - Nguyên tắc "Zero trust user input" phải luôn được áp dụng triệt để, không được lơ là.
@@ -129,7 +130,7 @@
 
 > Looking back at this 4-day journey, the most important thing I learned wasn't just how to bypass a filter or how to use a specific exploit like PrintSpoofer. It was about persistence.
 
-> In the world of cybersecurity, the "Eureka" moment rarely happens at the start. It happens at 3:00 AM, after dozens of failed attempts, when you’re about to give up but decide to try just one more payload. From a simple avatar upload to gaining full control over a Windows Server, this experience taught me that security is a cat-and-mouse game where the smallest human error—like leaving a front-end script exposed or forgetting to re-enable a defender—can lead to a total compromise.
+> In the world of cybersecurity, the "Eureka" moment rarely happens at the start. It happens at 3:00 AM, after dozens of failed attempts, when you're about to give up but decide to try just one more payload. From a simple avatar upload to gaining full control over a Windows Server, this experience taught me that security is a cat-and-mouse game where the smallest human error—like leaving a front-end script exposed or forgetting to re-enable a defender—can lead to a total compromise.
 
 > As I close this log, the shell is gone and the vulnerability is (hopefully) patched, but the mindset remains: Never trust user input, and never stop exploring.
 

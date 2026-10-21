@@ -1,0 +1,15 @@
+[book]
+title = "Security Journey"
+authors = ["Kuro-orzz"]
+description = "Ghi chép hành trình học và nghiên cứu bảo mật — từ CTF đến thực chiến."
+language = "vi"
+src = "src"
+
+[build]
+build-dir = "book"
+
+[output.html]
+default-theme = "navy"
+preferred-dark-theme = "navy"
+git-repository-url = "https://github.com/Kuro-orzz/Security_Journey"
+edit-url-template = "https://github.com/Kuro-orzz/Security_Journey/edit/master/{path}"
